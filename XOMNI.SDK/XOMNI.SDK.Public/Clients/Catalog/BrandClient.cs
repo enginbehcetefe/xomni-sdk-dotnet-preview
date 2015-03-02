@@ -60,8 +60,8 @@ namespace XOMNI.SDK.Public.Clients.Catalog
 
         public async Task<ApiResponse<PaginatedContainer<Brand>>> GetBrandsBySearchRequestAsync(SearchRequest searchRequest)
         {
-            Validator.For(searchRequest, "searchRequest").IsNotNull();
-
+            Validator.For(searchRequest, "searchRequest").IsNotNull().InRange();
+            
             string path = string.Format("/catalog/brands");
 
             using (var response = await Client.PostAsJsonAsync(path, searchRequest).ConfigureAwait(false))

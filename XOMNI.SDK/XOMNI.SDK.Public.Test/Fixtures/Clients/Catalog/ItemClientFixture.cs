@@ -1101,14 +1101,14 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
 	        ]
         }";
         #endregion
-        
+
         #region validAPIRequestForSearch
 
         const string validAPIRequestForSearch = @"{
             'Skip':0,
             'Take':10,
-            'OrderedPropertyName':null,
-            'OrderBy':null,
+            'OrderedPropertyName':'Title',
+            'OrderBy':'Asc',
             'IncludeStaticNavigation':true,
             'IncludeDynamicNavigation':true,
             'DefaultItemId':null,
@@ -1133,7 +1133,7 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
             'DimensionTypeId':null,
             'WeightTypeId':null,
             'TagId':null,
-            'DelimitedDynamicAttributeValues':'1:1;',
+            'DelimitedDynamicAttributeValues':'1:1',
             'IncludeOnlyMasterItems':false,
             'IncludeItemStaticProperties':true,
             'IncludeItemDynamicProperties':true,
@@ -1180,13 +1180,13 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
         }";
 
         #endregion
-        
+
         readonly ItemSearchRequest sampleItemSearchRequest = new ItemSearchRequest()
         {
             Skip = 0,
             Take = 10,
-            OrderedPropertyName = null,
-            OrderBy = null,
+            OrderedPropertyName = OrderedProperty.Title,
+            OrderBy = OrderByType.Asc,
             DefaultItemId = null,
             RFID = null,
             Name = null,
@@ -1205,7 +1205,7 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
             MaxPrice = null,
             DimensionTypeId = null,
             TagId = null,
-            DelimitedDynamicAttributeValues = "1:1;",
+            DelimitedDynamicAttributeValues = "1:1",
             IncludeOnlyMasterItems = false,
             ItemIds = new List<int>()
             {
@@ -1215,6 +1215,7 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
 
         readonly ItemSearchOptionsRequest sampleItemSearchOptionsRequest = new ItemSearchOptionsRequest()
         {
+            Take = 1,
             DefaultItemId = null,
             RFID = null,
             UUID = null,
@@ -1250,8 +1251,8 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
         {
             await base.ResponseParseTestAsync(
                 (ItemClient c) => c.GetAsync(1),
-                new HttpResponseMessage(HttpStatusCode.OK) 
-                { 
+                new HttpResponseMessage(HttpStatusCode.OK)
+                {
                     Content = new MockedJsonContent(validAPIResponseForGetAsync)
                 },
                 validAPIResponseForGetAsync
@@ -1271,26 +1272,26 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
         {
             await base.UriTestAsync(
               (ItemClient c) => c.GetAsync(1),
-              string.Format("/catalog/item/{0}?includeItemStaticProperties={1}&includeItemDynamicProperties={2}&imageAssetDetail={3}&videoAssetDetail={4}&documentAssetDetail={5}&includeItemInStoreMetadata={6}",1, true, true, 0, 0, 0, false));
+              string.Format("/catalog/item/{0}?includeItemStaticProperties={1}&includeItemDynamicProperties={2}&imageAssetDetail={3}&videoAssetDetail={4}&documentAssetDetail={5}&includeItemInStoreMetadata={6}", 1, true, true, 0, 0, 0, false));
 
             await base.UriTestAsync(
-                (ItemClient c) => c.GetAsync(1,includeItemInStoreMetadata : true),
+                (ItemClient c) => c.GetAsync(1, includeItemInStoreMetadata: true),
               string.Format("/catalog/item/{0}?includeItemStaticProperties={1}&includeItemDynamicProperties={2}&imageAssetDetail={3}&videoAssetDetail={4}&documentAssetDetail={5}&includeItemInStoreMetadata={6}", 1, true, true, 0, 0, 0, true));
 
             await base.UriTestAsync(
-                (ItemClient c) => c.GetAsync(1,includeItemStaticProperties:false),
+                (ItemClient c) => c.GetAsync(1, includeItemStaticProperties: false),
               string.Format("/catalog/item/{0}?includeItemStaticProperties={1}&includeItemDynamicProperties={2}&imageAssetDetail={3}&videoAssetDetail={4}&documentAssetDetail={5}&includeItemInStoreMetadata={6}", 1, false, true, 0, 0, 0, false));
 
             await base.UriTestAsync(
-                (ItemClient c) => c.GetAsync(1, includeItemDynamicProperties:false),
+                (ItemClient c) => c.GetAsync(1, includeItemDynamicProperties: false),
               string.Format("/catalog/item/{0}?includeItemStaticProperties={1}&includeItemDynamicProperties={2}&imageAssetDetail={3}&videoAssetDetail={4}&documentAssetDetail={5}&includeItemInStoreMetadata={6}", 1, true, false, 0, 0, 0, false));
 
             await base.UriTestAsync(
-                (ItemClient c) => c.GetAsync(1,includeItemInStoreMetadata:true,includeItemStaticProperties:false,includeItemDynamicProperties:false),
+                (ItemClient c) => c.GetAsync(1, includeItemInStoreMetadata: true, includeItemStaticProperties: false, includeItemDynamicProperties: false),
               string.Format("/catalog/item/{0}?includeItemStaticProperties={1}&includeItemDynamicProperties={2}&imageAssetDetail={3}&videoAssetDetail={4}&documentAssetDetail={5}&includeItemInStoreMetadata={6}", 1, false, false, 0, 0, 0, true));
 
             await base.UriTestAsync(
-                (ItemClient c) => c.GetAsync(1, imageAssetDetail:AssetDetailType.IncludeAll,videoAssetDetail:AssetDetailType.IncludeOnlyDefaultWithMetadata,documentAssetDetail:AssetDetailType.IncludeOnlyDefault),
+                (ItemClient c) => c.GetAsync(1, imageAssetDetail: AssetDetailType.IncludeAll, videoAssetDetail: AssetDetailType.IncludeOnlyDefaultWithMetadata, documentAssetDetail: AssetDetailType.IncludeOnlyDefault),
               string.Format("/catalog/item/{0}?includeItemStaticProperties={1}&includeItemDynamicProperties={2}&imageAssetDetail={3}&videoAssetDetail={4}&documentAssetDetail={5}&includeItemInStoreMetadata={6}", 1, true, true, 2, 4, 1, false));
 
         }
@@ -1331,7 +1332,7 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
         public async Task SearchResponseParseTest()
         {
             await base.ResponseParseTestAsync(
-                (ItemClient c) => c.Search(sampleItemSearchRequest,false),
+                (ItemClient c) => c.Search(sampleItemSearchRequest, false),
                 new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new MockedJsonContent(validAPIResponseForSearch)
@@ -1344,7 +1345,7 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
         public async Task SearchRequestParseTest()
         {
             await base.RequestParseTestAsync<ItemSearchRequest>(
-                (ItemClient c) => c.Search(sampleItemSearchRequest, false),validAPIRequestForSearch
+                (ItemClient c) => c.Search(sampleItemSearchRequest, false), validAPIRequestForSearch
             );
         }
 
@@ -1361,7 +1362,7 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
         {
             await base.UriTestAsync(
               (ItemClient c) => c.Search(sampleItemSearchRequest, true),
-              string.Format("/catalog/items?includeItemInStoreMetadata={0}",true));
+              string.Format("/catalog/items?includeItemInStoreMetadata={0}", true));
         }
 
         [TestMethod, TestCategory("ItemClient"), TestCategory("Search"), TestCategory("HTTP.POST")]
@@ -1381,25 +1382,66 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
         public async Task SearchParameterTest()
         {
             await base.SDKExceptionResponseTestAsync(
-                (ItemClient c) => c.Search(null, false),
-                new ArgumentNullException("itemSearchRequest can not be null."));
+               (ItemClient c) => c.Search(null, false),
+               new ArgumentNullException("itemSearchRequest can not be null."));
 
             await base.SDKExceptionResponseTestAsync(
                 (ItemClient c) => c.Search(new ItemSearchRequest()
                 {
                     Skip = -1,
-                    Take = 4
+                    Take = 4,
+                    DelimitedDynamicAttributeValues = "1;1"
                 }, false),
                 new ArgumentException("Skip must be greater than or equal to 0."));
+
+            await base.SDKExceptionResponseTestAsync(
+                (ItemClient c) => c.Search(new ItemSearchRequest()
+                {
+                    Skip = 1,
+                    Take = 4,
+                    DelimitedDynamicAttributeValues = "1:1;"
+                }, false),
+                new ArgumentException("Given string format is not correct."));
 
             await base.SDKExceptionResponseTestAsync(
                (ItemClient c) => c.Search(new ItemSearchRequest()
                {
                    Skip = 1,
-                   Take = 0
+                   Take = -6,
+                   DelimitedDynamicAttributeValues = "1;1"
                }, false),
-               new ArgumentException("Take must be greater than or equal to 1."));
+               new ArgumentOutOfRangeException("Take", -6, string.Format("{0} must be in range ({1} - {2}).", "Take", 1, 1000)));
 
+            await base.SDKExceptionResponseTestAsync(
+                (ItemClient c) => c.Search(new ItemSearchRequest()
+                {
+                    Take = 1,
+                    MinWeight = 300,
+                    MaxWeight = 400,
+                    DelimitedDynamicAttributeValues = "1:1"
+                }),
+                new ArgumentNullException("WeightTypeId can not be null.")
+            );
+
+            await base.SDKExceptionResponseTestAsync(
+              (ItemClient c) => c.Search(new ItemSearchRequest()
+              {
+                  Take = 1,
+                  MinWidth = 300,
+                  MinHeight = 300,
+                  MinDepth = 400,
+                  DelimitedDynamicAttributeValues = "1:1"
+              }),
+              new ArgumentNullException("DimensionTypeId can not be null."));
+
+            await base.SDKExceptionResponseTestAsync(
+              (ItemClient c) => c.Search(new ItemSearchRequest()
+              {
+                  Take = 1,
+                  MinWidth = 300,
+                  MaxWidth = 220,
+              }),
+              new ArgumentException(string.Format("{0} can not be greater than {1}.", "MinWidth", "MaxWidth")));
         }
 
         [TestMethod, TestCategory("ItemClient"), TestCategory("Search"), TestCategory("HTTP.POST")]
@@ -1446,8 +1488,58 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
         {
             await base.SDKExceptionResponseTestAsync(
                 (ItemClient c) => c.GetSearchOptions(null),
-                new ArgumentNullException("ItemSearchOptionsRequest can not be null.")
+                new ArgumentNullException("itemSearchOptionsRequest can not be null.")
             );
+
+            await base.SDKExceptionResponseTestAsync(
+                (ItemClient c) => c.GetSearchOptions(new ItemSearchOptionsRequest()
+                {
+                    Skip = -1,
+                    Take = 4,
+                    DelimitedDynamicAttributeValues = "1:1"
+                }),
+                new ArgumentException("Skip must be greater than or equal to 0."));
+
+            await base.SDKExceptionResponseTestAsync(
+               (ItemClient c) => c.GetSearchOptions(new ItemSearchOptionsRequest()
+               {
+                   Skip = 1,
+                   Take = 0,
+                   DelimitedDynamicAttributeValues = "1:1"
+               }),
+               new ArgumentOutOfRangeException("Take", 0, string.Format("{0} must be in range ({1} - {2}).", "Take", 1, 1000)));
+
+            await base.SDKExceptionResponseTestAsync(
+                (ItemClient c) => c.GetSearchOptions(new ItemSearchOptionsRequest()
+                {
+                    Take = 1,
+                    MinWeight = 300,
+                    MaxWeight = 400,
+                    DelimitedDynamicAttributeValues = "1:1"
+                }),
+                new ArgumentNullException("WeightTypeId can not be null.")
+            );
+
+            await base.SDKExceptionResponseTestAsync(
+              (ItemClient c) => c.GetSearchOptions(new ItemSearchOptionsRequest()
+              {
+                  Take = 1,
+                  MinWidth = 300,
+                  MinHeight = 300,
+                  MinDepth = 400,
+                  DelimitedDynamicAttributeValues = "1:1"
+              }),
+              new ArgumentNullException("DimensionTypeId can not be null."));
+
+            await base.SDKExceptionResponseTestAsync(
+              (ItemClient c) => c.GetSearchOptions(new ItemSearchOptionsRequest()
+              {
+                  Take = 1,
+                  MinWidth = 300,
+                  MaxWidth = 220,
+                  DelimitedDynamicAttributeValues = "1:1"
+              }),
+              new ArgumentException(string.Format("{0} can not be greater than {1}.", "MinWidth", "MaxWidth")));
         }
 
         [TestMethod, TestCategory("ItemClient"), TestCategory("GetSearchOptions"), TestCategory("HTTP.POST")]
@@ -1471,5 +1563,5 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
 
         #endregion
     }
-   
+
 }

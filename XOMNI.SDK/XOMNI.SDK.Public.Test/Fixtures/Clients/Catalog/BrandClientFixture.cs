@@ -421,9 +421,38 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Catalog
         [TestMethod, TestCategory("BrandClient"), TestCategory("GetBrandsBySearchRequestAsync"), TestCategory("HTTP.POST")]
         public async Task GetBrandsBySearchRequestAsyncHeadersTest()
         {
-            await base.DefaultRequestHeadersTestAsync(
-                (BrandClient c) => c.GetBrandsBySearchRequestAsync(searchRequest)
+            await base.SDKExceptionResponseTestAsync(
+                (BrandClient c) => c.GetBrandsBySearchRequestAsync(null),
+                new ArgumentNullException("searchRequest can not be null."));
+
+            await base.SDKExceptionResponseTestAsync(
+                (BrandClient c) => c.GetBrandsBySearchRequestAsync(new SearchRequest()
+                {
+                    MinWeight = 300,
+                    MaxWeight = 400,
+                    DelimitedDynamicAttributeValues = "1:1"
+                }),
+                new ArgumentNullException("WeightTypeId can not be null.")
             );
+
+            await base.SDKExceptionResponseTestAsync(
+              (BrandClient c) => c.GetBrandsBySearchRequestAsync(new SearchRequest()
+              {
+                  MinWidth = 300,
+                  MinHeight = 300,
+                  MinDepth = 400,
+                  DelimitedDynamicAttributeValues = "1:1"
+              }),
+              new ArgumentNullException("DimensionTypeId can not be null."));
+
+            await base.SDKExceptionResponseTestAsync(
+              (BrandClient c) => c.GetBrandsBySearchRequestAsync(new SearchRequest()
+              {
+                  MinWidth = 300,
+                  MaxWidth = 220,
+                  DelimitedDynamicAttributeValues = "1:1"
+              }),
+              new ArgumentException(string.Format("{0} can not be greater than {1}.", "MinWidth", "MaxWidth")));
         }
         #endregion
     }

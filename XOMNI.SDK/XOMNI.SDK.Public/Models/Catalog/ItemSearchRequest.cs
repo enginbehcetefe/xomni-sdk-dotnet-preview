@@ -10,8 +10,8 @@ namespace XOMNI.SDK.Public.Models.Catalog
     {
         public int Skip { get; set; }
         public int Take { get; set; }
-        public string OrderedPropertyName { get; set; }
-        public string OrderBy { get; set; }
+        public OrderedProperty OrderedPropertyName { get; set; }
+        public OrderByType OrderBy { get; set; }
         public string TagQuery { get; set; }
         protected virtual bool IncludeStaticNavigation { get; set; }
         protected virtual bool IncludeDynamicNavigation { get; set; }

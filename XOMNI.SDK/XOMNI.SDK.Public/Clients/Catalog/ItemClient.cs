@@ -30,7 +30,7 @@ namespace XOMNI.SDK.Public.Clients.Catalog
 
         public async Task<ApiResponse<Navigation>> GetSearchOptions(ItemSearchOptionsRequest itemSearchOptionsRequest)
         {
-            Validator.For(itemSearchOptionsRequest, "ItemSearchOptionsRequest").IsNotNull();
+            Validator.For(itemSearchOptionsRequest, "itemSearchOptionsRequest").IsNotNull().IsValid();
 
             string path = "/catalog/itemsearchoptions";
 
@@ -42,9 +42,8 @@ namespace XOMNI.SDK.Public.Clients.Catalog
 
         public async Task<ApiResponse<MultipleItemSearchResult<Item>>> Search(ItemSearchRequest itemSearchRequest, bool includeItemInStoreMetadata = false)
         {
-            Validator.For(itemSearchRequest, "itemSearchRequest").IsNotNull();
-            Validator.For(itemSearchRequest.Skip, "Skip").IsGreaterThanOrEqual(0);
-            Validator.For(itemSearchRequest.Take, "Take").IsGreaterThanOrEqual(1);
+            Validator.For(itemSearchRequest, "itemSearchRequest").IsNotNull().IsValid();
+ 
 
             string path = string.Format("/catalog/items?includeItemInStoreMetadata={0}", includeItemInStoreMetadata);
 
