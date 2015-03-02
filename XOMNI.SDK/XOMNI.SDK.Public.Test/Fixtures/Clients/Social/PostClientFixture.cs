@@ -124,7 +124,7 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Social
             await base.SDKExceptionResponseTestAsync(
                 (PostClient p) => p.GetAsync(1),
                 new ArgumentException("User/OmniSession")
-            );
+                );
         }
 
         [TestMethod, TestCategory("PostClient"), TestCategory("GetAsync"), TestCategory("HTTP.GET")]
@@ -201,7 +201,7 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Social
             await base.SDKExceptionResponseTestAsync(
                 (PostClient p) => p.GetPoliciesAsync(),
                 new ArgumentException("User/OmniSession")
-            );
+                );
         }
 
         [TestMethod, TestCategory("PostClient"), TestCategory("GetPoliciesAsync"), TestCategory("HTTP.GET")]
@@ -228,9 +228,8 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Social
                     {
                         Content = new MockedJsonContent(validAPIResponseForGetPostAndDeleteAsync)
                     },
-                    validAPIResponseForGetPostAndDeleteAsync,
-                    piiUser: piiUser
-            );
+                    validAPIResponseForGetPostAndDeleteAsync
+                    );
         }
 
         [TestMethod, TestCategory("PostClient"), TestCategory("PostAsync"), TestCategory("HTTP.POST")]
@@ -238,8 +237,8 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Social
         {
             await base.HttpMethodTestAsync(
                 (PostClient p) => p.PostAsync(sampleSocialPostRequest),
-                HttpMethod.Post,
-                piiUser: piiUser);
+                HttpMethod.Post
+                );
         }
 
         [TestMethod, TestCategory("PostClient"), TestCategory("PostAsync"), TestCategory("HTTP.POST")]
@@ -247,8 +246,8 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Social
         {
             await base.UriTestAsync(
               (PostClient p) => p.PostAsync(sampleSocialPostRequest),
-              "/social/post",
-                piiUser: piiUser);
+              "/social/post"
+              );
         }
 
         [TestMethod, TestCategory("PostClient"), TestCategory("PostAsync"), TestCategory("HTTP.POST")]
@@ -260,8 +259,8 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Social
             await base.APIExceptionResponseTestAsync(
               (PostClient p) => p.PostAsync(sampleSocialPostRequest),
               notFoundHttpResponseMessage,
-              expectedExceptionResult,
-                piiUser: piiUser);
+              expectedExceptionResult
+              );
         }
 
         [TestMethod, TestCategory("PostClient"), TestCategory("PostAsync"), TestCategory("HTTP.POST")]
@@ -273,16 +272,16 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Social
             await base.APIExceptionResponseTestAsync(
               (PostClient p) => p.PostAsync(sampleSocialPostRequest),
               conflictHttpResponseMessage,
-              expectedExceptionResult,
-                piiUser: piiUser);
+              expectedExceptionResult
+              );
         }
 
         [TestMethod, TestCategory("PostClient"), TestCategory("PostAsync"), TestCategory("HTTP.POST")]
         public async Task PostAsyncDefaultRequestHeadersTest()
         {
             await base.DefaultRequestHeadersTestAsync(
-                (PostClient p) => p.PostAsync(sampleSocialPostRequest),
-                piiUser: piiUser);
+                (PostClient p) => p.PostAsync(sampleSocialPostRequest)
+                );
         }
 
         [TestMethod, TestCategory("PostClient"), TestCategory("PostAsync"), TestCategory("HTTP.POST")]
@@ -294,9 +293,8 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Social
                     RelatedItemId = -1,
                     Content = "Test"
                 }),
-                new ArgumentException("RelatedItemId must be greater than or equal to 1."),
-                piiUser: piiUser
-            );
+                new ArgumentException("RelatedItemId must be greater than or equal to 1.")
+                );
         }
 
         [TestMethod, TestCategory("PostClient"), TestCategory("PostRequestCommentToPostAsync"), TestCategory("HTTP.POST")]
@@ -308,9 +306,8 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Social
                     RelatedItemId = 1,
                     Content = null
                 }),
-                new ArgumentException("Content can not be empty or null."),
-                piiUser: piiUser
-            );
+                new ArgumentException("Content can not be empty or null.")
+                );
         }
 
         [TestMethod, TestCategory("PostClient"), TestCategory("PostAsync"), TestCategory("HTTP.POST")]
@@ -327,7 +324,8 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Social
                         Content = "This is a sample comment",
                         RelatedItemId = 5
                     })
-                    ,requestJson,piiUser:piiUser);
+                    ,requestJson
+                    );
         }
         #endregion
 
@@ -384,7 +382,7 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.Social
             await base.SDKExceptionResponseTestAsync(
                 (PostClient p) => p.DeleteAsync(1),
                 new ArgumentException("User/OmniSession")
-            );
+                );
         }
 
         [TestMethod, TestCategory("PostClient"), TestCategory("DeleteAsync"), TestCategory("HTTP.DELETE")]

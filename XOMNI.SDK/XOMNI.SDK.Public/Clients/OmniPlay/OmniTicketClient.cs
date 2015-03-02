@@ -59,7 +59,7 @@ namespace XOMNI.SDK.Public.Clients.OmniPlay
 
         public async Task<ApiResponse<OmniSession>> PostSessionAsync(OmniTicket omniTicket)
 		{
-            
+            ValidatePIIToken();
 			string path = "/omniplay/pii/session";
 
 			using (var response = await Client.PostAsJsonAsync(path, omniTicket).ConfigureAwait(false))

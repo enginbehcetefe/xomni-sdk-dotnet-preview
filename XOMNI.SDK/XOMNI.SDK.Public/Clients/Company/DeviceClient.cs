@@ -24,7 +24,7 @@ namespace XOMNI.SDK.Public.Clients.Company
             await Client.DeleteAsync(path).ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<List<Device>>> GetAsync(int searchDistance, Location gpsLocation, int? deviceTypeId = null, string metadataKey = null, string metadataValue = null, bool includeMetadata = false)
+        public async Task<ApiResponse<List<Device>>> GetAsync(double searchDistance, Location gpsLocation, int? deviceTypeId = null, string metadataKey = null, string metadataValue = null, bool includeMetadata = false)
         {
             Validator.For(searchDistance, "searchDistance").InRange(0, 1);
             Validator.For(gpsLocation, "gpsLocation").IsNotNull();

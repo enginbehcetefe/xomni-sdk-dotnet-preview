@@ -214,7 +214,9 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.PII
         {
             await base.RequestParseTestAsync<WishlistItem>(
                 (WishlistItemClient c) => c.PostAsync(Guid.NewGuid(), sampleWishlistItem),
-                validAPIRequest);
+                validAPIRequest,
+                piiUser: piiUser
+                );
         }
 
         [TestMethod, TestCategory("WishlistItemClient"), TestCategory("PostAsync"), TestCategory("HTTP.POST")]
@@ -226,7 +228,9 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.PII
                 {
                     Content = new MockedJsonContent(validAPIResponse)
                 },
-                validAPIResponse);
+                validAPIResponse,
+                piiUser: piiUser
+                );
         }
 
         [TestMethod, TestCategory("WishlistItemClient"), TestCategory("PostAsync"), TestCategory("HTTP.POST")]
@@ -234,7 +238,9 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.PII
         {
             await base.HttpMethodTestAsync(
                 (WishlistItemClient c) => c.PostAsync(Guid.NewGuid(), sampleWishlistItem),
-                HttpMethod.Post);
+                HttpMethod.Post,
+                piiUser: piiUser
+                );
         }
 
         [TestMethod, TestCategory("WishlistItemClient"), TestCategory("PostAsync"), TestCategory("HTTP.POST")]
@@ -242,7 +248,9 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.PII
         {
             await base.UriTestAsync(
              (WishlistItemClient c) => c.PostAsync(Guid.Parse(uniqeId), sampleWishlistItem),
-             string.Format("/pii/wishlistitem?wishlistUniqueKey={0}", uniqeId));
+             string.Format("/pii/wishlistitem?wishlistUniqueKey={0}", uniqeId),
+             piiUser: piiUser
+             );
         }
 
         [TestMethod, TestCategory("WishlistItemClient"), TestCategory("PostAsync"), TestCategory("HTTP.POST")]
@@ -253,11 +261,15 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.PII
                   {
                       ItemId = -1
                   }),
-              new ArgumentException(string.Format("{0} must be greater than or equal to 1.", "ItemId")));
+              new ArgumentException(string.Format("{0} must be greater than or equal to 1.", "ItemId")),
+              piiUser: piiUser
+              );
 
             await base.SDKExceptionResponseTestAsync(
                (WishlistItemClient c) => c.PostAsync(Guid.NewGuid(), null),
-               new ArgumentNullException(string.Format("{0} can not be null.", "wishlistItem")));
+               new ArgumentNullException(string.Format("{0} can not be null.", "wishlistItem")),
+               piiUser: piiUser
+               );
 
             await base.SDKExceptionResponseTestAsync(
                 (WishlistItemClient c) => c.PostAsync(Guid.NewGuid(), new WishlistItem()
@@ -265,7 +277,9 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.PII
                     ItemId = 3,
                     LastSeenLocation = invalidLatitudeLocation
                 }),
-                new ArgumentOutOfRangeException("Latitude", -95, string.Format("{0} must be in range ({1} - {2}).", "Latitude", -90, 90)));
+                new ArgumentOutOfRangeException("Latitude", -95, string.Format("{0} must be in range ({1} - {2}).", "Latitude", -90, 90)),
+                piiUser: piiUser
+                );
 
             await base.SDKExceptionResponseTestAsync(
                 (WishlistItemClient c) => c.PostAsync(Guid.NewGuid(), new WishlistItem()
@@ -273,7 +287,9 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.PII
                     ItemId = 3,
                     LastSeenLocation = invalidLongitudeLocation
                 }),
-                new ArgumentOutOfRangeException("Longitude", -185, string.Format("{0} must be in range ({1} - {2}).", "Longitude", -180, 180)));
+                new ArgumentOutOfRangeException("Longitude", -185, string.Format("{0} must be in range ({1} - {2}).", "Longitude", -180, 180)),
+                piiUser: piiUser
+                );
 
         }
 
@@ -286,7 +302,9 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.PII
             await base.APIExceptionResponseTestAsync(
               (WishlistItemClient c) => c.PostAsync(Guid.NewGuid(), sampleWishlistItem),
               forbiddenHttpResponseMessage,
-              expectedExceptionResult);
+              expectedExceptionResult,
+              piiUser: piiUser
+              );
         }
         #endregion
     }

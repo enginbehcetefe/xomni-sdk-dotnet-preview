@@ -25,7 +25,7 @@ namespace XOMNI.SDK.Public.Test.Fixtures.Clients.PII
                 (LoyaltyMetadataClient l) => l.GetAsync(),
                 validHttpResponseMessage,
                 validAPIResponse,
-                omniSession: omniSession
+                piiUser: piiUser
             );
         }
 

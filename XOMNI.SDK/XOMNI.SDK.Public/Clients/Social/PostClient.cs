@@ -45,7 +45,6 @@ namespace XOMNI.SDK.Public.Clients.Social
 
         public async Task<ApiResponse<SocialPost>> PostAsync(SocialPostRequest socialPostRequest)
         {
-            ValidatePIIToken();
             Validator.For(socialPostRequest, "socialPostRequest").IsNotNull();
             Validator.For(socialPostRequest.RelatedItemId, "RelatedItemId").IsGreaterThanOrEqual(1);
             Validator.For(socialPostRequest.Content, "Content").IsNotNullOrEmpty();

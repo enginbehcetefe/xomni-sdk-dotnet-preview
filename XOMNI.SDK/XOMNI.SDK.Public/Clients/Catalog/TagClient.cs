@@ -16,7 +16,7 @@ namespace XOMNI.SDK.Public.Clients.Catalog
 
 		}
 
-		public async Task<PaginatedContainer<Tag>> GetAsync(int skip, int take, bool includeMetadata)
+		public async Task<PaginatedContainer<Tag>> GetAsync(int skip, int take, bool includeMetadata = false)
 		{
             Validator.For(skip, "skip").IsGreaterThanOrEqual(0);
             Validator.For(take, "take").IsGreaterThanOrEqual(1);

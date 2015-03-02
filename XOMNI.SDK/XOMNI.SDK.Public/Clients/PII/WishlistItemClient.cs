@@ -44,6 +44,7 @@ namespace XOMNI.SDK.Public.Clients.PII
 
         public async Task<ApiResponse<WishlistItem>> PostAsync(Guid wishlistUniqueKey, WishlistItem wishlistItem)
         {
+            ValidatePIIToken();
             Validator.For(wishlistItem, "wishlistItem").IsNotNull();
             Validator.For(wishlistItem.ItemId, "ItemId").IsGreaterThanOrEqual(1);
 

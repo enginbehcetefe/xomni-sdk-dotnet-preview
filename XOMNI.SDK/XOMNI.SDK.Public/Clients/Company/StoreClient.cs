@@ -16,7 +16,7 @@ namespace XOMNI.SDK.Public.Clients.Company
 
 		}
 
-        public async Task<ApiResponse<PaginatedContainer<Store>>> GetAsync(Location locationInfo, int searchDistance, int skip, int take)
+        public async Task<ApiResponse<PaginatedContainer<Store>>> GetAsync(Location locationInfo, double searchDistance, int skip, int take)
 		{
             Validator.For(locationInfo, "locationInfo").IsNotNull();
             Validator.For(locationInfo.Latitude, "Latitude").InRange(-90, 90);

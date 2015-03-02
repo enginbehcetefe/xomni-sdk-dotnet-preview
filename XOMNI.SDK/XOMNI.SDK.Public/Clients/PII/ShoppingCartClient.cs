@@ -51,6 +51,7 @@ namespace XOMNI.SDK.Public.Clients.PII
 
         public async Task<ApiResponse<ShoppingCartWithItems>> GetAsync(Guid shoppingCartUniqueKey, Location location = null, bool includeItemStaticProperties = true, bool includeItemDynamicProperties = false, bool includeCategoryMetadata = false, AssetDetailType imageAssetDetail = AssetDetailType.None, AssetDetailType videoAssetDetail = AssetDetailType.None, AssetDetailType documentAssetDetail = AssetDetailType.None, string metadataKey = null, string metadataValue = null)
         {
+            ValidatePIIToken();
             string path = string.Format("/pii/shoppingcart?shoppingCartUniqueKey={0}&",shoppingCartUniqueKey);
 
             if (location != null)
